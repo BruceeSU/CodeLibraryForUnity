@@ -24,10 +24,10 @@ public class UltimateCameraBehaviourEditor : Editor
 
     public override void OnInspectorGUI()
     {
-
-        EditorGUILayout.HelpBox("Select a camera mode and set properties", MessageType.Info);
+        
+        //EditorGUILayout.HelpBox("Select a camera mode and set properties", MessageType.Info);
         GUILayout.Space(10);
-        _target.cameraType = (UltimateCameraBehaviour.CameraType)EditorGUILayout.EnumPopup(new GUIContent("Camera Mode"), _target.cameraType, EditorStyles.toolbarButton, GUILayout.Height(20f));
+        DrawModeSelectBar();
 
         switch (_target.cameraType)
         {
@@ -52,13 +52,17 @@ public class UltimateCameraBehaviourEditor : Editor
         }
         base.Repaint();
     }
+    private static void DrawModeSelectBar()
+    {
+        //_setting.foldOutSpaceCraftModePropertyPanel = EditorGUILayout.Foldout(_setting.foldOutSpaceCraftModePropertyPanel, new GUIContent("Base Property"));
+    }
 
     /// <summary>
     /// 绘制SpaceCraft模式的检视面板
     /// </summary>
     private void DrawSpaceCraftModeInspector()
     {
-        _setting.foldOutSpaceCraftModePropertyPanel = EditorGUILayout.Foldout(_setting.foldOutSpaceCraftModePropertyPanel, new GUIContent("Base Property"));
+        DrawModeSelectBar();
         if (_setting.foldOutSpaceCraftModePropertyPanel)
         {
             _target.spaceCraftModeData.moveSpeed = EditorGUILayout.FloatField(new GUIContent("Move Speed"), _target.spaceCraftModeData.moveSpeed);
@@ -66,6 +70,8 @@ public class UltimateCameraBehaviourEditor : Editor
         }
 
     }
+
+
 
     private void DrawPlaneFirstPersonModeInspector()
     { }
@@ -78,7 +84,32 @@ public class UltimateCameraBehaviourEditor : Editor
 
     private void DrawSphereThirdPersonModeInspector()
     {
-        base.OnInspectorGUI();
+        SphereThirdPersonModeData data = _target.sphere3rdMode;
+        GUILayout.Space(20);
+        data.ignoreTimeScale = GUILayout.Toggle( data.ignoreTimeScale, new GUIContent("Ignore Time Scale"), EditorStyles.toolbarButton);
+        GUILayout.Space(20);
+
+        EditorGUILayout.BeginHorizontal();
+        data.zoomMinDistance = EditorGUILayout.FloatField("Min", data.zoomMinDistance);
+        data.zoomMaxDistance = EditorGUILayout.FloatField("Max", data.zoomMaxDistance);
+        EditorGUILayout.EndHorizontal();
+        data.zoomDistance = EditorGUILayout.Slider("Zoom Dis", data.zoomDistance, data.zoomMinDistance, data.zoomMaxDistance);
+        data.zoomSpeed = EditorGUILayout.FloatField("Zoom Speed", data.zoomSpeed);
+
+        GUILayout.Space(20);
+
+        EditorGUILayout.BeginHorizontal();
+        data.minAngle = EditorGUILayout.FloatField("MinAngle", data.minAngle);
+        data.maxAngle = EditorGUILayout.FloatField("MaxAngle", data.maxAngle);
+        EditorGUILayout.EndHorizontal();
+
+        GUILayout.Space(20);
+
+        data.moveSpeed = EditorGUILayout.FloatField("Move Speed", data.moveSpeed);
+        data.rotateSpeed = EditorGUILayout.FloatField("Rotate Speed", data.rotateSpeed);
+
+
+        _target.sphere3rdMode = data;
     }
 }
 

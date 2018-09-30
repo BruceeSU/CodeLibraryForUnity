@@ -5,19 +5,30 @@ using UnityEngine;
 
 namespace Liton.Unity.Extension
 {
+    /// <summary>
+    /// 给枚举类型成员添加注释的特性
+    /// 
+    /// @秉承着代码里最好不要出现中文的习惯 ( 除了注释 )，枚举类型及其成员都使用英文字母命名
+    /// @由于UI界面使用时可能要中文，于是将枚举成员的中文注释保存在特性中，写入元数据
+    /// @通过反射机制来获取枚举成员的中文注释
+    /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Field)]
     public class EnumCommentAttribute : System.Attribute
     {
-        private string _commont;
-        public string Commont
+        private string _comment;
+
+        /// <summary>
+        /// 枚举成员的注释
+        /// </summary>
+        public string Comment
         {
-            get { return _commont; }
+            get { return _comment; }
         }
 
-        public EnumCommentAttribute(string commont)
+        public EnumCommentAttribute(string comment)
         {
-            _commont = commont;
-            if (_commont == null || _commont == string.Empty) _commont = "Has No Commont";
+            _comment = comment;
+            if (_comment == null || _comment == string.Empty) _comment = "Has No Commont";
         }
     }
 
@@ -45,7 +56,7 @@ namespace Liton.Unity.Extension
     }
 
     /// <summary>
-    /// 对UnityEngine.UI空间下的UI类的扩展
+    /// 对UnityEngine.UI空间下的UI类的扩展，一次调用完成多个属性的设置
     /// </summary>
     public static class UIExtension
     {
