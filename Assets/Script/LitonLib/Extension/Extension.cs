@@ -110,6 +110,15 @@ namespace Liton.Unity.Extension
             return toggle;
         }
 
+        /// <summary>
+        /// 对UnityEngine.UI.Slider组件的扩展
+        /// </summary>
+        /// <param name="slider"></param>
+        /// <param name="parent"></param>
+        /// <param name="pos"></param>
+        /// <param name="scale"></param>
+        /// <param name="onValueChange"></param>
+        /// <returns></returns>
         public static UnityEngine.UI.Slider SetupSlider(this UnityEngine.UI.Slider slider, Transform parent, Vector3 pos, float scale, UnityEngine.Events.UnityAction<float> onValueChange)
         {
             Transform trans = slider.transform;
